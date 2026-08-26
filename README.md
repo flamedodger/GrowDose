@@ -4,8 +4,6 @@
 
 GrowDose is a three-channel dosing system built around an ESP32-S3, CNC Shield and A4988 stepper motor drivers. It is designed to provide accurate, repeatable nutrient and pH dosing while integrating with Home Assistant through ESPHome.
 
-![GrowDose controller](hardware/images/doser_setup.jpg)
-
 ## Why GrowDose?
 
 GrowDose is designed as a **volume-controlled dosing system**, rather than simply switching pumps on and off for a fixed period of time.
