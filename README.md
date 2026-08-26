@@ -2,7 +2,7 @@
 
 **Open-source automated nutrient dosing system for hydroponic and grow-room automation.**
 
-GrowDose is a three-channel dosing system built around an ESP32-S3, CNC Shield and A4988 stepper motor drivers. It is designed to provide accurate, repeatable nutrient and pH dosing while integrating with Home Assistant via ESPHome.
+GrowDose is a three-channel dosing system built around an ESP32-S3, CNC Shield and A4988 stepper motor drivers. It is designed to provide accurate, repeatable nutrient and pH dosing while integrating into existing home automation ecosystems like Home Assistant.
 
 ![GrowDose assembly](hardware/images/doser_setup.jpg)
 
@@ -10,7 +10,7 @@ GrowDose is a three-channel dosing system built around an ESP32-S3, CNC Shield a
 
 GrowDose is designed as a **volume-controlled dosing system**, rather than simply switching pumps on and off for a fixed period of time.
 
-Many DIY hydroponic controllers use relay or PWM-controlled DC peristaltic pumps and determine the dose primarily by running the pump for a calculated amount of time. GrowDose instead uses **stepper-driven peristaltic pumps** with precise step counting for accurate volume control.
+Many DIY hydroponic controllers use relay or PWM-controlled DC peristaltic pumps and determine the dose primarily by running the pump for a calculated amount of time. GrowDose instead uses **stepper motors** to drive peristaltic pumps with precise, repeatable step counts.
 
 Each pump will be individually calibrated to determine its actual **steps-per-ml**. This allows dosing commands to be expressed in millilitres rather than pump run time.
 
@@ -18,7 +18,7 @@ The intended architecture is:
 
 **Home Assistant → ESPHome → GrowDose → calibrated stepper pump → measured volume**
 
-This makes GrowDose a dedicated dosing actuator that can be integrated into a larger grow-room automation system while keeping the physical dosing process independent from the higher-level automation.
+This makes GrowDose a dedicated dosing actuator that can be integrated into a larger grow-room automation system while keeping the physical dosing process independent from the higher-level automation logic.
 
 ## Key Goals
 
@@ -96,21 +96,17 @@ The hardware platform has been successfully tested:
 GrowDose/
 ├── README.md
 ├── CHANGELOG.md
+├── Hardware
 ├── esphome/
 │   └── nutrient-doser.yaml
 ├── hardware/
-│   ├── BOM.md
-│   ├── wiring.md
 │   └── images/
 └── docs/
-    └── calibration.md
 ```
 
 ## Documentation
 
-* [Hardware BOM](hardware/BOM.md)
-* [Wiring](hardware/wiring.md)
-* [Calibration](docs/calibration.md)
+* [Hardware Bill of Materials](Hardware)
 * [Changelog](CHANGELOG.md)
 
 ## Project Status
