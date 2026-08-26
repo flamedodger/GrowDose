@@ -31,6 +31,15 @@ Bill of materials for the current three-channel GrowDose prototype.
 |   3 | JST extension leads  | Modified/re-pinned as required for the CNC shield |
 |   1 | Jumper set           | A4988 microstepping configuration                 |
 
+## Frane Components 
+
+| Qty | Component            | Specification / Notes
+| --: | -------------------- | -------------------------------------------------- |
+| 1.  | 10" Rack Shelf       | Geekpi or Tekmojo.                                 |
+| 2.  | 1m 35mm Angle Iron   | I ised 1mm thickness.                              |
+| 1.  | 10" DIN Rail.        | Connects box to frame.                             |
+| 2.  | Din rail mounts.     | Fixes to the back of the box to mount on the rail. |
+
 ## A4988 Configuration
 
 All three A4988 drivers are currently configured for **1/8 microstepping**:
