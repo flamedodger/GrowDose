@@ -4,7 +4,7 @@ GrowDose/
 ├── README.md
 ├── esphome/
 │   └── nutrient-doser.yaml
-├── hardware/
+├── hardware/BOM.md
 │   ├── wiring.md
 │   └── images/
 └── docs/
