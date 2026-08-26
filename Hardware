@@ -90,7 +90,16 @@ The following will be added or updated as the project develops:
 * Final tubing and fluid connections
 * Any additional safety components
 
-ESP32-S3 note:
-GPIO19/GPIO20 are shared with native USB D-/D+.
-They are used for CNC shield STEP signals and have been tested successfully.
-USB flashing may require the shield to be disconnected.
+
+## ESP32-S3 USB Pin Note
+
+GPIO19 and GPIO20 are shared with the ESP32-S3 native USB interface.
+
+GrowDose uses these pins for CNC Shield stepper control:
+
+- GPIO20 → Pump A DIR
+- GPIO19 → Pump C STEP
+
+This configuration has been tested successfully.
+
+If USB serial flashing is required, disconnect the CNC Shield or stepper drivers to avoid conflicts during programming.
