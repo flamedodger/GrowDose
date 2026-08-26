@@ -1,0 +1,247 @@
+# ============================================================
+# Nutrient Doser
+#
+# Board:
+#   ESP32-S3 UNO R3
+#   ESP32-S3-WROOM-1 N16R8
+#
+# Driver:
+#   CNC Shield + A4988
+#
+# Microstepping:
+#   M0 ON
+#   M1 ON
+#   M2 OFF
+#   = 1/8 step
+#
+# GPIO MAP CONFIRMED BY CONTINUITY TEST
+#
+# Pump A (X)
+#   STEP GPIO18
+#   DIR  GPIO20
+#
+# Pump B (Y)
+#   STEP GPIO17
+#   DIR  GPIO3
+#
+# Pump C (Z)
+#   STEP GPIO19
+#   DIR  GPIO14
+#
+# Enable:
+#   GPIO21
+#   A4988 EN active LOW
+#
+# ============================================================
+
+
+esphome:
+  name: nutrient-doser
+  friendly_name: Nutrient Doser
+
+  on_boot:
+    priority: 600
+    then:
+      - output.turn_off: driver_enable
+
+
+esp32:
+  variant: esp32s3
+  framework:
+    type: esp-idf
+
+
+logger:
+  level: INFO
+
+
+api:
+  encryption:
+    key: "dVIKE0Vr7JTBA+nU2kycZfMEI2Ifr75op6DT1VUIfLk="
+
+
+ota:
+  - platform: esphome
+
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  ap:
+    ssid: "Nutrient Doser Fallback Hotspot"
+    password: "PrpSjpDuxh1M"
+
+
+captive_portal:
+
+
+web_server:
+  port: 80
+
+
+
+# ============================
+# Outputs
+# ============================
+
+output:
+
+  # Pump A - X axis
+  - platform: gpio
+    pin: GPIO18
+    id: pump_a_step
+
+  - platform: gpio
+    pin: GPIO20
+    id: pump_a_dir
+
+
+  # Pump B - Y axis
+  - platform: gpio
+    pin: GPIO17
+    id: pump_b_step
+
+  - platform: gpio
+    pin: GPIO3
+    id: pump_b_dir
+
+
+  # Pump C - Z axis
+  - platform: gpio
+    pin: GPIO19
+    id: pump_c_step
+
+  - platform: gpio
+    pin: GPIO14
+    id: pump_c_dir
+
+
+  # Shared A4988 Enable
+  # Inverted because EN is active LOW
+  - platform: gpio
+    pin:
+      number: GPIO21
+      inverted: true
+    id: driver_enable
+
+
+
+# ============================
+# Pump test buttons
+# ============================
+
+button:
+
+
+  - platform: template
+    name: "Pump A Forward"
+
+    on_press:
+      - output.turn_on: driver_enable
+      - output.turn_on: pump_a_dir
+
+      - repeat:
+          count: 1600
+          then:
+            - output.turn_on: pump_a_step
+            - delay: 1ms
+            - output.turn_off: pump_a_step
+            - delay: 1ms
+
+      - output.turn_off: driver_enable
+
+
+
+  - platform: template
+    name: "Pump A Reverse"
+
+    on_press:
+      - output.turn_on: driver_enable
+      - output.turn_off: pump_a_dir
+
+      - repeat:
+          count: 1600
+          then:
+            - output.turn_on: pump_a_step
+            - delay: 1ms
+            - output.turn_off: pump_a_step
+            - delay: 1ms
+
+      - output.turn_off: driver_enable
+
+
+
+  - platform: template
+    name: "Pump B Forward"
+
+    on_press:
+      - output.turn_on: driver_enable
+      - output.turn_on: pump_b_dir
+
+      - repeat:
+          count: 1600
+          then:
+            - output.turn_on: pump_b_step
+            - delay: 1ms
+            - output.turn_off: pump_b_step
+            - delay: 1ms
+
+      - output.turn_off: driver_enable
+
+
+
+  - platform: template
+    name: "Pump B Reverse"
+
+    on_press:
+      - output.turn_on: driver_enable
+      - output.turn_off: pump_b_dir
+
+      - repeat:
+          count: 1600
+          then:
+            - output.turn_on: pump_b_step
+            - delay: 1ms
+            - output.turn_off: pump_b_step
+            - delay: 1ms
+
+      - output.turn_off: driver_enable
+
+
+
+  - platform: template
+    name: "Pump C Forward"
+
+    on_press:
+      - output.turn_on: driver_enable
+      - output.turn_on: pump_c_dir
+
+      - repeat:
+          count: 1600
+          then:
+            - output.turn_on: pump_c_step
+            - delay: 1ms
+            - output.turn_off: pump_c_step
+            - delay: 1ms
+
+      - output.turn_off: driver_enable
+
+
+
+  - platform: template
+    name: "Pump C Reverse"
+
+    on_press:
+      - output.turn_on: driver_enable
+      - output.turn_off: pump_c_dir
+
+      - repeat:
+          count: 1600
+          then:
+            - output.turn_on: pump_c_step
+            - delay: 1ms
+            - output.turn_off: pump_c_step
+            - delay: 1ms
+
+      - output.turn_off: driver_enable
