@@ -1,0 +1,82 @@
+# GrowDose Hardware Bill of Materials
+
+Bill of materials for the current three-channel GrowDose prototype.
+
+## Controller
+
+| Qty | Component                             | Specification / Notes               |
+| --: | ------------------------------------- | ----------------------------------- |
+|   1 | ESP32-S3 UNO-format development board | ESP32-S3, UNO R3 form factor, USB-C |
+|   1 | CNC Shield V3                         | UNO-compatible CNC shield           |
+|   3 | A4988 stepper driver modules          | One driver per dosing pump          |
+
+## Dosing Pumps
+
+| Qty | Component            | Specification / Notes                                       |
+| --: | -------------------- | ----------------------------------------------------------- |
+|   3 | Stepper dosing pumps | NEMA-style stepper-driven dosing pumps, approximately 1.3 A |
+
+## Power
+
+| Qty | Component            | Specification / Notes                  |
+| --: | -------------------- | -------------------------------------- |
+|   1 | 12 V DC power supply | Supplies the stepper drivers and pumps |
+|   1 | USB-C supply/cable   | Powers the ESP32-S3 controller         |
+
+## Wiring & Connectors
+
+| Qty | Component            | Specification / Notes                             |
+| --: | -------------------- | ------------------------------------------------- |
+|   3 | JST pump connections | Pump motor connections                            |
+|   3 | JST extension leads  | Modified/re-pinned as required for the CNC shield |
+|   1 | Jumper set           | A4988 microstepping configuration                 |
+
+## A4988 Configuration
+
+All three A4988 drivers are currently configured for **1/8 microstepping**:
+
+| Setting | State |
+| ------- | ----- |
+| M0      | ON    |
+| M1      | ON    |
+| M2      | OFF   |
+
+With a typical 200-step/revolution motor:
+
+**1600 steps/revolution**
+
+## Controller Pinout
+
+| Function            |   GPIO |
+| ------------------- | -----: |
+| Pump A STEP         | GPIO18 |
+| Pump A DIR          | GPIO20 |
+| Pump B STEP         | GPIO17 |
+| Pump B DIR          |  GPIO3 |
+| Pump C STEP         | GPIO19 |
+| Pump C DIR          | GPIO14 |
+| Shared A4988 ENABLE | GPIO21 |
+
+## Current Hardware Status
+
+The following has been physically tested and confirmed:
+
+* ESP32-S3 controller operating correctly
+* CNC Shield operating correctly
+* All three A4988 drivers operating correctly
+* All three pumps operating correctly
+* All three pumps tested in forward and reverse
+* Shared driver enable control working
+* Motors release when the drivers are disabled
+
+## Not Yet Finalised
+
+The following will be added or updated as the project develops:
+
+* Exact pump model/part numbers
+* Final power-supply specification
+* Pump calibration values
+* Steps-per-ml for each pump
+* Final enclosure and mounting hardware
+* Final tubing and fluid connections
+* Any additional safety components
