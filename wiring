@@ -1,0 +1,9 @@
+| Function    | GPIO |
+| ----------- | ---: |
+| Pump A STEP |   18 |
+| Pump A DIR  |   20 |
+| Pump B STEP |   17 |
+| Pump B DIR  |    3 |
+| Pump C STEP |   19 |
+| Pump C DIR  |   14 |
+| A4988 EN    |   21 |
