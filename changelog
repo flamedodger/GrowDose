@@ -1,0 +1,7 @@
+## Unreleased
+
+- Initial three-pump hardware implementation
+- ESP32-S3 + CNC Shield + A4988
+- STEP/DIR control
+- Software driver enable
+- Forward/reverse testing
