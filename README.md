@@ -2,13 +2,15 @@
 
 **Open-source automated nutrient dosing system for hydroponic and grow-room automation.**
 
-GrowDose is a three-channel dosing system built around an ESP32-S3, CNC Shield and A4988 stepper motor drivers. It is designed to provide accurate, repeatable nutrient and pH dosing while integrating with Home Assistant through ESPHome.
+GrowDose is a three-channel dosing system built around an ESP32-S3, CNC Shield and A4988 stepper motor drivers. It is designed to provide accurate, repeatable nutrient and pH dosing while integrating with Home Assistant via ESPHome.
+
+![GrowDose assembly](hardware/images/assembly_complete.jpg)
 
 ## Why GrowDose?
 
 GrowDose is designed as a **volume-controlled dosing system**, rather than simply switching pumps on and off for a fixed period of time.
 
-Many DIY hydroponic controllers use relay or PWM-controlled DC peristaltic pumps and determine the dose primarily by running the pump for a calculated amount of time. GrowDose instead uses **stepper-driven dosing pumps**, allowing the controller to precisely control the number of motor steps.
+Many DIY hydroponic controllers use relay or PWM-controlled DC peristaltic pumps and determine the dose primarily by running the pump for a calculated amount of time. GrowDose instead uses **stepper-driven peristaltic pumps** with precise step counting for accurate volume control.
 
 Each pump will be individually calibrated to determine its actual **steps-per-ml**. This allows dosing commands to be expressed in millilitres rather than pump run time.
 
