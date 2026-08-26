@@ -57,7 +57,7 @@ logger:
 
 api:
   encryption:
-    key: "dVIKE0Vr7JTBA+nU2kycZfMEI2Ifr75op6DT1VUIfLk="
+    key: "...."
 
 
 ota:
@@ -70,7 +70,7 @@ wifi:
 
   ap:
     ssid: "Nutrient Doser Fallback Hotspot"
-    password: "PrpSjpDuxh1M"
+    password: "...."
 
 
 captive_portal:
