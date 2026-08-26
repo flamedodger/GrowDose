@@ -80,3 +80,8 @@ The following will be added or updated as the project develops:
 * Final enclosure and mounting hardware
 * Final tubing and fluid connections
 * Any additional safety components
+
+ESP32-S3 note:
+GPIO19/GPIO20 are shared with native USB D-/D+.
+They are used for CNC shield STEP signals and have been tested successfully.
+USB flashing may require the shield to be disconnected.
