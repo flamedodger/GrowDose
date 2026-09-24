@@ -2,7 +2,34 @@
 
 ## Overview
 
-Calibration establishes the **steps-per-millilitre (steps/ml)** ratio for each pump. This allows GrowDose to deliver precise volumes based on stepper motor commands rather than timing estimates.
+Calibration establishes the conversion between pump pulses and delivered volume. GrowDose must use the **density of the liquid being dispensed** when converting a measured mass to millilitres:
+
+```text
+volume (ml) = measured mass (g) / liquid density (g/ml)
+ml per pulse = measured mass (g) / (pulse count × liquid density (g/ml))
+pulses per ml = pulse count × liquid density (g/ml) / measured mass (g)
+```
+
+Do not apply a water-based calibration directly to nutrient concentrate or pH-down solution unless its density is known to be the same. Record the liquid, concentration, density source, pulse count, mass, and test date with every calibration.
+
+## Recorded Calibration Results
+
+The following results are measured masses, not final volume settings:
+
+| Pump | Measured output | Pulse count | Measured mass | Derived mass per pulse | Status |
+| --- | ---: | ---: | ---: | ---: | --- |
+| A | 20 g | Not recorded | 20 g | Cannot calculate yet | Record the pulse count and liquid density |
+| B | 20 g | Not recorded | 20 g | Cannot calculate yet | Record the pulse count and liquid density |
+| C | 15 g | 12,000 | 15 g | 0.00125 g/pulse | Recheck with the actual pH-down solution |
+
+For Pump C, using a liquid density of `D` g/ml:
+
+```text
+ml per pulse = 0.00125 / D
+pulses per ml = 12000 × D / 15 = 800 × D
+```
+
+The Pump C result must not be entered as a final `ml per pulse` value until the density of the liquid used for dosing is known. Pump A and Pump B also require their pulse counts before their conversion factors can be calculated.
 
 ## Calibration Process
 
@@ -10,71 +37,96 @@ Calibration establishes the **steps-per-millilitre (steps/ml)** ratio for each p
 
 - GrowDose hardware fully assembled and tested
 - ESP32-S3 flashed with ESPHome firmware
-- Three calibrated measuring containers (10ml minimum accuracy)
-- Distilled water or test liquid
+- A scale with suitable resolution and capacity
+- A container that can be weighed or tared
+- The actual liquid to be dispensed, or its verified density
+- The pulse count used for each test
+- Distilled water or another non-hazardous liquid for initial pump checks
 
 ### Step 1: Prepare the Setup
 
-1. Place measuring container under Pump A
-2. Connect to GrowDose via ESPHome interface
-3. Ensure all three pumps are de-energized before starting
+1. Prime the pump and remove air bubbles from the tubing.
+2. Place the collection container on the scale and tare it.
+3. Connect to GrowDose via the ESPHome interface.
+4. Ensure all pumps are de-energized before starting.
+5. Confirm the pulse count, liquid identity, and density to be used for the test.
 
-### Step 2: Run Test Pulses
+### Step 2: Run a Gravimetric Test
 
-For each pump (A, B, C):
+For each pump (A, B, and C):
 
-1. Send a step command of exactly 1000 steps
-2. Measure the volume dispensed (in millilitres)
-3. Record the result
+1. Send a precisely recorded pulse/step command.
+2. Collect the complete output in the tared container.
+3. Record the delivered mass in grams.
+4. Repeat the test at least three times.
+5. Calculate the average mass per pulse.
 
-**Formula:**
+```text
+mass per pulse (g/pulse) = measured mass (g) / pulse count
 ```
-steps/ml = 1000 steps / measured volume (ml)
+
+### Step 3: Convert Mass to Volume
+
+Use the verified density of the liquid at the test temperature:
+
+```text
+volume (ml) = measured mass (g) / density (g/ml)
+ml per pulse = measured mass (g) / (pulse count × density (g/ml))
+pulses per ml = 1 / (ml per pulse)
 ```
 
-### Step 3: Verify Results
+If the density is unavailable, keep the calibration in grams per pulse and do not label it as a millilitres-per-dose setting.
 
-1. Run the calibration sequence 3 times for each pump
-2. Average the results to get the final `steps/ml` value
-3. Record all values in the ESPHome configuration
+### Step 4: Verify Results
 
-### Step 4: Validate
+1. Run the calibration sequence three times for each pump.
+2. Average the conversion factors, preferably using the same liquid and container setup.
+3. Record the final value together with the liquid density and test conditions.
+4. Test each pump with known doses, such as 5 ml, 10 ml, 20 ml, and 50 ml.
+5. Confirm accuracy to within the project’s accepted tolerance before enabling automated dosing.
 
-1. Test each pump with a known dose (e.g., 5ml)
-2. Calculate required steps: `5ml × steps/ml`
-3. Command that number of steps and verify actual output
-4. Repeat for 10ml, 20ml, and 50ml doses
-5. Confirm accuracy to within ±2% variation
+## pH-Down Acid Dosing
 
-## Expected Results
+Pump C is intended for pH adjustment, but its calibration must be checked again using the actual pH-down solution before it is placed into service. Acid concentration and density can differ substantially from water or nutrient solution.
 
-For typical stepper peristaltic pumps with 1/8 microstepping:
-- Pump A steps/ml: ~500-800
-- Pump B steps/ml: ~500-800
-- Pump C steps/ml: ~400-600
+Before acid dosing is enabled, verify that every wetted component is compatible with the **specific acid and concentration**:
 
-*Actual values depend on specific pump model and configuration*
+- Pump tubing
+- Feed/inlet tubing
+- Outlet/dosing tubing
+- Fittings and connectors
+- Storage container
+- Any valve, check valve, filter, or other component in the liquid path
+
+Check the product’s safety data and technical information, then confirm the materials against the manufacturers’ chemical-compatibility guidance. Do not infer compatibility from appearance or from compatibility with nutrient solution. Replace or isolate any component that is not explicitly suitable.
+
+Use appropriate chemical handling and personal protective equipment, prevent backflow into the reservoir, and keep acid dosing disabled until compatibility, priming, leak checks, and a measured-output test with the actual solution are complete.
 
 ## Troubleshooting
 
 **Inconsistent measurements:**
-- Check for air bubbles in pump inlet line
-- Ensure pump priming is complete
-- Verify stepper motor connections are secure
+- Check for air bubbles in the pump inlet line.
+- Ensure pump priming is complete.
+- Verify that the scale is stable and the container is tared.
+- Repeat tests using the same pulse count and liquid temperature.
 
-**Values significantly higher/lower than expected:**
-- Review motor microstep configuration
-- Check for mechanical binding or occlusion
-- Verify pump impeller orientation and assembly
+**Values significantly higher or lower than expected:**
+- Review motor microstep configuration.
+- Check for mechanical binding or occlusion.
+- Verify pump direction and tubing installation.
+- Confirm that the liquid density and units are correct.
 
-**Pump won't prime:**
-- Check inlet line is submerged
-- Verify no debris in pump inlet
-- Ensure motor direction is correct for this pump
+**Pump will not prime:**
+- Check that the inlet line is submerged.
+- Verify that there is no debris or air leak in the inlet path.
+- Ensure motor direction is correct for the pump.
+- Check tubing and fittings for leaks or chemical damage.
 
 ## Safety Notes
 
-- Always test with water or non-hazardous liquid first
-- Never leave powered pump unattended
-- Allow motor to cool between extended test runs
-- Store calibration values in non-volatile memory
+- Always test with water or another non-hazardous liquid before testing an acid.
+- Never leave a powered pump unattended.
+- Allow the motor to cool between extended test runs.
+- Keep acid and nutrient channels clearly identified and separate.
+- Do not enable automated pH dosing until the actual solution has been tested and all wetted materials have been verified as compatible.
+- Store calibration values and their associated liquid/density information in non-volatile project documentation.
