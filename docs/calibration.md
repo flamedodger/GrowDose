@@ -14,22 +14,31 @@ Do not apply a water-based calibration directly to nutrient concentrate or pH-do
 
 ## Recorded Calibration Results
 
-The following results are measured masses, not final volume settings:
+The following results are measured masses, not final volume settings. All three pumps were tested over **12,000 pulses**:
 
 | Pump | Measured output | Pulse count | Measured mass | Derived mass per pulse | Status |
 | --- | ---: | ---: | ---: | ---: | --- |
-| A | 20 g | Not recorded | 20 g | Cannot calculate yet | Record the pulse count and liquid density |
-| B | 20 g | Not recorded | 20 g | Cannot calculate yet | Record the pulse count and liquid density |
+| A | 20 g | 12,000 | 20 g | 0.0016667 g/pulse | Convert using the density of the dispensed liquid |
+| B | 20 g | 12,000 | 20 g | 0.0016667 g/pulse | Convert using the density of the dispensed liquid |
 | C | 15 g | 12,000 | 15 g | 0.00125 g/pulse | Recheck with the actual pH-down solution |
 
-For Pump C, using a liquid density of `D` g/ml:
+For a liquid density of `D` g/ml:
 
 ```text
-ml per pulse = 0.00125 / D
-pulses per ml = 12000 × D / 15 = 800 × D
+Pump A ml per pulse = 20 / (12000 × D) = 0.0016667 / D
+Pump B ml per pulse = 20 / (12000 × D) = 0.0016667 / D
+Pump C ml per pulse = 15 / (12000 × D) = 0.00125 / D
 ```
 
-The Pump C result must not be entered as a final `ml per pulse` value until the density of the liquid used for dosing is known. Pump A and Pump B also require their pulse counts before their conversion factors can be calculated.
+Equivalent pulses-per-ml values are:
+
+```text
+Pump A = 600 × D
+Pump B = 600 × D
+Pump C = 800 × D
+```
+
+The Pump C result must be checked again using the actual pH-down solution before acid dosing is enabled. If the density is unavailable, keep the calibration in grams per pulse and do not label it as a millilitres-per-dose setting.
 
 ## Calibration Process
 
