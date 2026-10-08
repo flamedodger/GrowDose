@@ -25,6 +25,12 @@ The sensor is calibrated using distance from the sensor:
 
 This produces a calibrated level percentage. It is not a verified volume percentage unless the tank geometry and calibration have been independently validated.
 
+## Reservoir geometry and physical fill reference
+
+The Nutriculture NFT424 reservoir has a bottom approximately 980 × 360 mm, a top approximately 1060 × 440 mm, and an overall depth of 200 mm. The NFT table sits approximately 50 mm down inside the tank. These measurements can inform a volume model, but the tapered walls and occupied upper space mean that litres per millimetre is not constant. Validate litres against measured fill increments before using it for dosing or water accounting.
+
+The mechanical float valve operates at approximately 27 mm sensor distance. This is about 23 mm above the software 100% reference at 50 mm. The float valve is a physical overfill safeguard; reaching 100% in Home Assistant does not mean it has closed.
+
 ## Calculation validation
 
 | Distance | Expected percentage |
