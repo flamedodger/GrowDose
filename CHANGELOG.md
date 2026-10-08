@@ -11,11 +11,16 @@ All notable changes to this project will be documented in this file.
 - Pump calibration guide
 - Bill of materials
 
+### Added since 0.1.0
+- Deployed ESPHome GPIO pulse test controls for all three pumps, with shared driver enable released after each test
+- Integrated the A0221A4 tank-level sensor into Home Assistant and the GrowDose tank card
+- Installed a Home Assistant nutrient event logger that records meaningful independent tank-level changes across restarts
+
 ### In Progress
-- Pump calibration validation
-- ESPHome stepper motor implementation
-- Steps-per-ml dosing control logic
-- Priming and safety limits
+- Final liquid-path calibration and verified steps-per-ml values
+- Production dose controls, priming, and safety limits
+- Complete dose/fill event logging, usage totals, and notifications
+- Automatic nutrient and pH control
 
 ## [0.1.0] - 2026-08-26
 
@@ -35,7 +40,7 @@ All notable changes to this project will be documented in this file.
 - ✅ Shared motor enable control functional
 - ⏳ Pump calibration (pending)
 
-#### Known Limitations
+#### Known Limitations at the 0.1.0 release
 - No ESPHome firmware yet deployed
 - Pump calibration values not established
 - Home Assistant integration pending
