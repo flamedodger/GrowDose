@@ -14,31 +14,23 @@ Do not apply a water-based calibration directly to nutrient concentrate or pH-do
 
 ## Recorded Calibration Results
 
-The following results are measured masses, not final volume settings. All three pumps were tested over **12,000 pulses**:
+The following are historical measured masses, not final volume settings. Pump C's 12,000-pulse count is retained in the project notes. The repository previously attributed 12,000 pulses to the A and B 20 g tests, but the project reference says those pulse counts were not preserved. Treat the A/B pulse counts as **unverified** until the original test record or a repeat measurement resolves the conflict:
 
 | Pump | Measured output | Pulse count | Measured mass | Derived mass per pulse | Status |
 | --- | ---: | ---: | ---: | ---: | --- |
-| A | 20 g | 12,000 | 20 g | 0.0016667 g/pulse | Convert using the density of the dispensed liquid |
-| B | 20 g | 12,000 | 20 g | 0.0016667 g/pulse | Convert using the density of the dispensed liquid |
+| A | 20 g | Unverified | 20 g | Not established | Repeat with the final liquid path and record pulses |
+| B | 20 g | Unverified | 20 g | Not established | Repeat with the final liquid path and record pulses |
 | C | 15 g | 12,000 | 15 g | 0.00125 g/pulse | Recheck with the actual pH-down solution |
 
 For a liquid density of `D` g/ml:
 
 ```text
-Pump A ml per pulse = 20 / (12000 × D) = 0.0016667 / D
-Pump B ml per pulse = 20 / (12000 × D) = 0.0016667 / D
-Pump C ml per pulse = 15 / (12000 × D) = 0.00125 / D
+Pump C historical ml per pulse = 15 / (12000 × D) = 0.00125 / D
 ```
 
-Equivalent pulses-per-ml values are:
+The corresponding historical Pump C value is `800 × D` pulses/ml. Do not calculate A/B pulses per ml from their unverified pulse counts.
 
-```text
-Pump A = 600 × D
-Pump B = 600 × D
-Pump C = 800 × D
-```
-
-The Pump C result must be checked again using the actual pH-down solution before acid dosing is enabled. If the density is unavailable, keep the calibration in grams per pulse and do not label it as a millilitres-per-dose setting.
+All three channels require repeated calibration with their completed tubing and check valves, using the actual working liquid. The Pump C result must be checked again using the actual pH-down solution before acid dosing is enabled. If the density is unavailable, keep the calibration in grams per pulse and do not label it as a millilitres-per-dose setting.
 
 ## Calibration Process
 
