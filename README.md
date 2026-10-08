@@ -81,14 +81,12 @@ The hardware platform has been successfully tested:
 ## Development Roadmap
 
 1. **Hardware testing** — Complete
-2. **Pump calibration** — Next
-3. **ESPHome stepper implementation**
-4. **Steps-per-ml dosing control**
-5. **Priming and dosing functions**
-6. **Dosing safety limits**
-7. **Home Assistant integration**
-8. **Dosing history and usage tracking**
-9. **Full system validation**
+2. **ESPHome pump test controls** — Working; six forward/reverse test buttons, with shared driver enable released afterward
+3. **Tank-level sensor and Home Assistant event logger** — Working for percentage and meaningful passive level changes
+4. **Final liquid-path calibration** — Pending for A, B, and pH down
+5. **Calibrated volume dosing, priming, and dose limits** — Pending
+6. **Dose/fill event capture, usage totals, and notifications** — Pending full validation
+7. **Automatic nutrient/pH control and system validation** — Pending
 
 ## Project Structure
 
@@ -111,6 +109,6 @@ GrowDose/
 
 ## Project Status
 
-GrowDose is currently at the **hardware validation stage**. The three-pump platform is operational and the next major step is calibrating each pump to establish accurate steps-per-ml values.
+The three-pump platform and ESPHome test buttons are operational. Home Assistant receives BlueLab pH/EC readings and the A0221A4 tank-level percentage; a separate nutrient event logger records meaningful tank-level changes, including changes across restarts. These Home Assistant components are not yet represented by production dosing code in this repository.
 
-The project is being developed incrementally, with hardware reliability and repeatable dosing established before adding automated nutrient dosing logic.
+The next major step is final scale-based calibration of each pump with its completed tubing, check valves, and working liquid. Production volume dosing, dose limits, usage totals, full dose/fill logging, phone notifications, and automatic nutrient/pH control remain to be implemented or validated.
